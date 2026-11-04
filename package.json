@@ -12,6 +12,8 @@
     "test:e2e": "playwright test",
     "test:rls": "node --env-file=.env.rls scripts/check-rls.mjs",
     "preview": "vite preview --host 127.0.0.1",
+    "start": "node --env-file-if-exists=.env.local server.mjs",
+    "test:hosting": "node --test scripts/hosting.test.mjs",
     "test:sql": "node scripts/check-sql.mjs",
     "format": "prettier --write ."
   },
