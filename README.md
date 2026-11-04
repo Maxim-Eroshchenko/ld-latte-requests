@@ -17,6 +17,8 @@ npm run dev
 
 ## Настройка Supabase
 
+Проект уже создан: **LD LATTE Development / ld-latte-requests**, `https://rvfunzjedtcnrpvpsajj.supabase.co`. Подробные шаги именно для него, SQL-проверки и сценарий двух пользователей: **[SUPABASE_SETUP.md](SUPABASE_SETUP.md)**. Удалённое применение миграции пока не подтверждено: интеграция возвращает `Unknown tool`.
+
 1. Создайте проект на https://supabase.com/dashboard. Дождитесь готовности PostgreSQL.
 2. Откройте SQL Editor и выполните целиком `supabase/migrations/202611040001_requests.sql` в новой базе. Миграция транзакционная и применяется один раз; повторное применение уже существующей таблицы намеренно завершится ошибкой. Для управления миграциями CLI можно связать проект командой `supabase link --project-ref <ref>` и выполнить `supabase db push`.
 3. В Authentication → Providers включите Email/password. Решите, требуется ли подтверждение email; приложение поддерживает оба режима. При включённом подтверждении после регистрации показывается сообщение о письме, доступ к заявкам появляется после подтверждения и получения сессии. Для реального корпоративного использования настройте собственный SMTP согласно ограничениям Supabase.
@@ -90,10 +92,12 @@ npm run preview
 
 ```powershell
 git branch -M main
-git remote add origin https://github.com/YOUR_ACCOUNT/ld-latte-requests.git
+git remote add origin https://github.com/Maxim-Eroshchenko/ld-latte-requests.git
 git push -u origin main
 ```
 
-`.env*` исключены, кроме двух шаблонов. `package-lock.json` должен быть включён в репозиторий. Реальные ключи, пароли, `node_modules`, отчёты тестов и сборку добавлять не нужно. Публичные ссылки на репозиторий и приложение пока отсутствуют: аккаунты и целевые проекты не предоставлены.
+Remote `origin` уже настроен на [приватный репозиторий](https://github.com/Maxim-Eroshchenko/ld-latte-requests); повторно добавлять его не нужно. GitHub-интеграция подтвердила право push. Терминальный push пока не подтверждён: обычному Git требуется отдельный вход.
+
+`.env*` исключены, кроме двух шаблонов. `package-lock.json` включён в репозиторий. Реальные ключи, пароли, `node_modules`, отчёты тестов и сборку добавлять не нужно. Приложение ещё не опубликовано.
 
 Фактические результаты проверок смотрите в `AI_USAGE.md`, ограничения — в `KNOWN_ISSUES.md`.

@@ -102,6 +102,28 @@ try {
   );
   await db.exec("set role anon");
   await rejected("select * from public.requests");
+  await db.exec("reset role");
+  const editorScenario = (
+    await readFile(
+      new URL("../supabase/tests/verify_requests.sql", import.meta.url),
+      "utf8",
+    )
+  )
+    .replaceAll("REPLACE_WITH_USER_A_UUID", a)
+    .replaceAll("REPLACE_WITH_USER_B_UUID", b);
+  const before = await db.query(
+    "select count(*)::integer as count from public.requests",
+  );
+  const editorResult = await db.exec(editorScenario);
+  check(
+    editorResult.some((result) =>
+      result.rows.some((row) => String(row.result).startsWith("PASS:")),
+    ),
+  );
+  const after = await db.query(
+    "select count(*)::integer as count from public.requests",
+  );
+  check(after.rows[0].count === before.rows[0].count);
   console.log(
     `PASS: ${checks} PostgreSQL checks: migration, defaults, validation, timestamps, RLS A/B, ownership/column grants, anonymous and delete denial.`,
   );
